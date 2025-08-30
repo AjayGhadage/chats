@@ -68,6 +68,21 @@ app.put('/chats/:id', async (req, res) => {
 app.get("/chats/new", (req, res) => {
   res.render("new.ejs");});
 
+app.post('/chats', (req, res) => {
+  let { from, to , msg }= req.body; 
+  let newChat = new Chat({ 
+    from: from, 
+    to:to ,
+    msg:msg,
+    created_at: new Date()});
+    newChat
+    .save()
+    .then((res) => console.log("Chat saved successfully. " + res))
+    .catch((err) => console.log("Error saving chat: " + err));
+    // res.send("Chat created successfully");
+    res.redirect('/chats');
+  });
+
 app.get('/', (req, res) => {
   res.send('Root is working');
 });
